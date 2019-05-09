@@ -7,6 +7,6 @@ import dagger.Module
 
 @Module
 internal abstract class UseCaseBindingModule {
-    @Binds
-    abstract fun bindProjectsUsecase(networkStateImpl: ProjectsUseCaseImpl): ProjectsUseCase
+	@Binds
+	abstract fun bindProjectsUsecase(networkStateImpl: ProjectsUseCaseImpl): ProjectsUseCase
 }

@@ -9,21 +9,21 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class DetailPresenter @Inject constructor() :
-    MviBasePresenter<DetailView, DetailViewState>() {
-    override fun bindIntents() {
-        val initialIntent: Observable<DetailViewState> = intent(DetailView::loadProject)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .switchMap { Observable.just(DetailViewState.Project(it)) }
+	MviBasePresenter<DetailView, DetailViewState>() {
+	override fun bindIntents() {
+		val initialIntent: Observable<DetailViewState> = intent(DetailView::loadProject)
+			.subscribeOn(Schedulers.io())
+			.observeOn(AndroidSchedulers.mainThread())
+			.switchMap { Observable.just(DetailViewState.Project(it)) }
 
-        subscribeViewState(initialIntent, DetailView::render)
-    }
+		subscribeViewState(initialIntent, DetailView::render)
+	}
 }
 
 interface DetailView : BaseView<DetailViewState> {
-    fun loadProject(): Observable<Projects.Project>
+	fun loadProject(): Observable<Projects.Project>
 }
 
 sealed class DetailViewState {
-    data class Project(val project : Projects.Project) : DetailViewState()
+	data class Project(val project: Projects.Project) : DetailViewState()
 }

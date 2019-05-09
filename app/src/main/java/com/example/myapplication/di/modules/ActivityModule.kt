@@ -5,5 +5,5 @@ import dagger.Module
 
 @Module
 abstract class ActivityModule {
-    abstract fun contributeMainActivity(): MainActivity
+	abstract fun contributeMainActivity(): MainActivity
 }

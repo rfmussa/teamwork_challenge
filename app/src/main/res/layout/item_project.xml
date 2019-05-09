@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Clickable and selectableItemBackground are optional -->
 <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?selectableItemBackground"
@@ -8,9 +10,7 @@
         android:minHeight="72dp"
         android:padding="6dip"
         android:paddingEnd="?listPreferredItemPaddingRight"
-        android:paddingStart="?listPreferredItemPaddingLeft"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools">
+        android:paddingStart="?listPreferredItemPaddingLeft">
 
     <ImageView
             android:transitionName="logo"
@@ -42,7 +42,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
-                tools:text="First Line" />
+                tools:text="First Line"/>
 
         <TextView
                 android:id="@+id/description"
@@ -50,7 +50,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
-                tools:text="Second Line" />
+                tools:text="Second Line"/>
     </LinearLayout>
 
 </RelativeLayout>

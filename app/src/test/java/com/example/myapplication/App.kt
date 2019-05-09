@@ -7,13 +7,13 @@ import com.example.myapplication.di.DaggerAppComponent
 import com.example.myapplication.di.modules.NetworkModule
 
 class App : Application(), AppComponentProvider {
-    override val component: AppComponent by lazy {
-        DaggerAppComponent.builder()
-            .networkModule(NetworkModule(" /")).build()
-    }
+	override val component: AppComponent by lazy {
+		DaggerAppComponent.builder()
+			.networkModule(NetworkModule(" /")).build()
+	}
 
-    override fun onCreate() {
-        super.onCreate()
-        component.build()
-    }
+	override fun onCreate() {
+		super.onCreate()
+		component.build()
+	}
 }

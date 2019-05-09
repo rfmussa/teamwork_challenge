@@ -8,7 +8,7 @@ import javax.inject.Singleton
 
 @Module
 class FragmentModule {
-    @Provides
-    @Singleton
-    fun provideApplication(application: Application) = application as App
+	@Provides
+	@Singleton
+	fun provideApplication(application: Application) = application as App
 }

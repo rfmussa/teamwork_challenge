@@ -30,68 +30,68 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 //TODO with a reducer we would only test the input Action and the output State
 @RunWith(JUnit4::class)
 class FeedPresenterTest {
-    private val moshi = Moshi.Builder().build()
+	private val moshi = Moshi.Builder().build()
 
-    private lateinit var retrofit: Retrofit
-    private lateinit var mockWebServer: MockWebServer
-    private lateinit var webService: ApiService
+	private lateinit var retrofit: Retrofit
+	private lateinit var mockWebServer: MockWebServer
+	private lateinit var webService: ApiService
 
-    @MockK(relaxed = true)
-    private lateinit var mockView: FeedView
+	@MockK(relaxed = true)
+	private lateinit var mockView: FeedView
 
-    @MockK(relaxed = true)
-    private lateinit var useCase: ProjectsUseCase
+	@MockK(relaxed = true)
+	private lateinit var useCase: ProjectsUseCase
 
-    private lateinit var feedPresenter: FeedPresenter
-    private val initialIntent: BehaviorSubject<Unit> = BehaviorSubject.create()
+	private lateinit var feedPresenter: FeedPresenter
+	private val initialIntent: BehaviorSubject<Unit> = BehaviorSubject.create()
 
-    @Before
-    @Throws(Exception::class)
-    fun beforeEachTest() {
-        MockKAnnotations.init(this, relaxUnitFun = true)
-        mockWebServer = MockWebServer()
-        mockWebServer.start()
+	@Before
+	@Throws(Exception::class)
+	fun beforeEachTest() {
+		MockKAnnotations.init(this, relaxUnitFun = true)
+		mockWebServer = MockWebServer()
+		mockWebServer.start()
 
-        RxJavaPlugins.setIoSchedulerHandler { Schedulers.trampoline() }
-        RxAndroidPlugins.setInitMainThreadSchedulerHandler { Schedulers.trampoline() }
+		RxJavaPlugins.setIoSchedulerHandler { Schedulers.trampoline() }
+		RxAndroidPlugins.setInitMainThreadSchedulerHandler { Schedulers.trampoline() }
 
-        //TODO ideally this would be handled with a different NetworkModule for tests
-        retrofit = Retrofit.Builder()
-            .addConverterFactory(MoshiConverterFactory.create(moshi))
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .baseUrl(mockWebServer.url("/").toString())
-            .client(OkHttpClient())
-            .build()
+		//TODO ideally this would be handled with a different NetworkModule for tests
+		retrofit = Retrofit.Builder()
+			.addConverterFactory(MoshiConverterFactory.create(moshi))
+			.addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+			.baseUrl(mockWebServer.url("/").toString())
+			.client(OkHttpClient())
+			.build()
 
-        webService = retrofit.create<ApiService>(ApiService::class.java)
-    }
+		webService = retrofit.create<ApiService>(ApiService::class.java)
+	}
 
-    @After
-    @Throws(Exception::class)
-    fun afterEachTest() {
-        mockWebServer.shutdown()
-        RxAndroidPlugins.reset()
-    }
+	@After
+	@Throws(Exception::class)
+	fun afterEachTest() {
+		mockWebServer.shutdown()
+		RxAndroidPlugins.reset()
+	}
 
 
-    @Test
-    fun `It renders the list on initial intent`() {
-        every { mockView.loadProjects() } returns initialIntent
-        // every { useCase.getProjects() } returns Observable.just(FeedViewState.ProjectList(mockProjectResponse))
-        feedPresenter = FeedPresenter(useCase)
-        feedPresenter.attachView(mockView)
+	@Test
+	fun `It renders the list on initial intent`() {
+		every { mockView.loadProjects() } returns initialIntent
+		// every { useCase.getProjects() } returns Observable.just(FeedViewState.ProjectList(mockProjectResponse))
+		feedPresenter = FeedPresenter(useCase)
+		feedPresenter.attachView(mockView)
 
-        /* When  load intent is called */
-        initialIntent.onNext(Unit)
+		/* When  load intent is called */
+		initialIntent.onNext(Unit)
 
-        // this.mockHttpResponse("mock_projects.json", HttpURLConnection.HTTP_OK)
+		// this.mockHttpResponse("mock_projects.json", HttpURLConnection.HTTP_OK)
 
-        /* Then the first state is Loading */
-        verify(exactly = 1, verifyBlock = { mockView.render(FeedViewState.Loading) })
+		/* Then the first state is Loading */
+		verify(exactly = 1, verifyBlock = { mockView.render(FeedViewState.Loading) })
 
-        /* Then the list is displayed */
-        // verify(exactly = 1, verifyBlock = { mockView.render(FeedViewState.ProjectList(mockProjectResponse)) })
-    }
+		/* Then the list is displayed */
+		// verify(exactly = 1, verifyBlock = { mockView.render(FeedViewState.ProjectList(mockProjectResponse)) })
+	}
 
 //    private val mockProjectResponse = listOf(
 //        Projects.Project(name = "Project Zero", id = "322852"),

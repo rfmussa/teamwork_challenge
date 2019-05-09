@@ -14,26 +14,26 @@ import javax.inject.Inject
 
 //TODO A production app would also use a reducer
 class FeedPresenter @Inject constructor(
-    private val useCase: ProjectsUseCase
+	private val useCase: ProjectsUseCase
 ) : MviBasePresenter<FeedView, FeedViewState>() {
-    @SuppressLint("CheckResult")
-    override fun bindIntents() {
-        val projects: Observable<FeedViewState> = intent(FeedView::loadProjects)
-            .subscribeOn(Schedulers.io())
-            .switchMap { useCase.getProjects() }
-            .observeOn(AndroidSchedulers.mainThread())
+	@SuppressLint("CheckResult")
+	override fun bindIntents() {
+		val projects: Observable<FeedViewState> = intent(FeedView::loadProjects)
+			.subscribeOn(Schedulers.io())
+			.switchMap { useCase.getProjects() }
+			.observeOn(AndroidSchedulers.mainThread())
 
-        subscribeViewState(projects, FeedView::render)
-    }
+		subscribeViewState(projects, FeedView::render)
+	}
 }
 
 interface FeedView : BaseView<FeedViewState> {
-    fun loadProjects(): BehaviorSubject<Unit>
+	fun loadProjects(): BehaviorSubject<Unit>
 }
 
 
 sealed class FeedViewState {
-    object Loading : FeedViewState()
-    data class ProjectList(val projectList: List<Projects.Project>) : FeedViewState()
-    data class Error(val msg: String) : FeedViewState()
+	object Loading : FeedViewState()
+	data class ProjectList(val projectList: List<Projects.Project>) : FeedViewState()
+	data class Error(val msg: String) : FeedViewState()
 }

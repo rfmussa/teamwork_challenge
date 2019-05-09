@@ -23,83 +23,83 @@ import javax.inject.Inject
 
 class FeedFragment : MviFragment<FeedView, FeedPresenter>(), FeedView {
 
-    private val groupAdapter: GroupAdapter<ViewHolder> = GroupAdapter()
-    private var loadSubject: BehaviorSubject<Unit> = BehaviorSubject.create<Unit>()
+	private val groupAdapter: GroupAdapter<ViewHolder> = GroupAdapter()
+	private var loadSubject: BehaviorSubject<Unit> = BehaviorSubject.create<Unit>()
 
-    @Inject
-    lateinit var presenter: FeedPresenter
+	@Inject
+	lateinit var presenter: FeedPresenter
 
-    override fun createPresenter(): FeedPresenter = presenter
+	override fun createPresenter(): FeedPresenter = presenter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        appComponent.fragment(this)
-        super.onCreate(savedInstanceState)
-    }
+	override fun onCreate(savedInstanceState: Bundle?) {
+		appComponent.fragment(this)
+		super.onCreate(savedInstanceState)
+	}
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        setHasOptionsMenu(true)
-        return inflater.inflate(R.layout.fragment_list, container, false)
-    }
+	override fun onCreateView(
+		inflater: LayoutInflater, container: ViewGroup?,
+		savedInstanceState: Bundle?
+	): View? {
+		setHasOptionsMenu(true)
+		return inflater.inflate(R.layout.fragment_list, container, false)
+	}
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setupRecyclerView()
-        postponeEnterTransition()
-        view.doOnPreDraw { startPostponedEnterTransition() }
+	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+		super.onViewCreated(view, savedInstanceState)
+		setupRecyclerView()
+		postponeEnterTransition()
+		view.doOnPreDraw { startPostponedEnterTransition() }
 
-        loadSubject.onNext(Unit)
+		loadSubject.onNext(Unit)
 
-    }
+	}
 
-    override fun loadProjects(): BehaviorSubject<Unit> = loadSubject
+	override fun loadProjects(): BehaviorSubject<Unit> = loadSubject
 
-    override fun render(vs: FeedViewState) {
-        when (vs) {
-            is FeedViewState.Loading -> {
-                progressView.show()
-                recyclerView.visibility = View.INVISIBLE
-            }
-            is FeedViewState.ProjectList -> {
-                progressView.hide()
-                recyclerView.visibility = View.VISIBLE
-                val itemList = vs.projectList
-                    .map { ProjectItem(it) }
-                    .toList()
+	override fun render(vs: FeedViewState) {
+		when (vs) {
+			is FeedViewState.Loading -> {
+				progressView.show()
+				recyclerView.visibility = View.INVISIBLE
+			}
+			is FeedViewState.ProjectList -> {
+				progressView.hide()
+				recyclerView.visibility = View.VISIBLE
+				val itemList = vs.projectList
+					.map { ProjectItem(it) }
+					.toList()
 
-                groupAdapter.update(itemList)
-            }
-            is FeedViewState.Error -> {
-                progressView.hide()
-                recyclerView.visibility = View.INVISIBLE
-                errorView.text = vs.msg
-                errorView.visibility = View.VISIBLE
-            }
-        }
-    }
+				groupAdapter.update(itemList)
+			}
+			is FeedViewState.Error -> {
+				progressView.hide()
+				recyclerView.visibility = View.INVISIBLE
+				errorView.text = vs.msg
+				errorView.visibility = View.VISIBLE
+			}
+		}
+	}
 
-    private fun setupRecyclerView() {
-        recyclerView.apply {
-            layoutManager = LinearLayoutManager(this.context)
-            adapter = groupAdapter
-            addItemDecoration(DividerItemDecoration(recyclerView.context, DividerItemDecoration.VERTICAL))
-        }
+	private fun setupRecyclerView() {
+		recyclerView.apply {
+			layoutManager = LinearLayoutManager(this.context)
+			adapter = groupAdapter
+			addItemDecoration(DividerItemDecoration(recyclerView.context, DividerItemDecoration.VERTICAL))
+		}
 
-        //TODO ideally this would be Passed as an Intent to the Presenter
-        groupAdapter.setOnItemClickListener { item, view ->
-            // Pass item to Bundle
-            val bundle = bundleOf("project" to (item as ProjectItem).project)
+		//TODO ideally this would be Passed as an Intent to the Presenter
+		groupAdapter.setOnItemClickListener { item, view ->
+			// Pass item to Bundle
+			val bundle = bundleOf("project" to (item as ProjectItem).project)
 
-            // Add shared element transitions
-            val extras = FragmentNavigator.Extras.Builder()
-                .addSharedElement(view.logo, ViewCompat.getTransitionName(view.logo)!!)
-                .addSharedElement(view.title, "title")
-                .build()
+			// Add shared element transitions
+			val extras = FragmentNavigator.Extras.Builder()
+				.addSharedElement(view.logo, ViewCompat.getTransitionName(view.logo)!!)
+				.addSharedElement(view.title, "title")
+				.build()
 
-            // Push action to navigation controller
-            view.findNavController().navigate(R.id.project_click, bundle, null, extras)
-        }
-    }
+			// Push action to navigation controller
+			view.findNavController().navigate(R.id.project_click, bundle, null, extras)
+		}
+	}
 }
