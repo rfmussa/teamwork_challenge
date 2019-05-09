@@ -1,0 +1,16 @@
+{
+  "STATUS": "OK",
+  "projects": [
+    {
+      "startDate": "",
+      "name": "Project Zero",
+      "id": "322852",
+      "endDate": ""
+    },
+    {
+      "id": "321041",
+      "name": "Project One",
+      "endDate": ""
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_marginTop="16dp"
+             android:layout_marginBottom="16dp"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
+
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:name="com.example.myapplication.ItemListFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:clipToPadding="false"
+            android:scrollbars="vertical"
+            android:layout_marginRight="16dp"
+            tools:listitem="@layout/item_project"/>
+    <!--ProgressBar-->
+    <androidx.core.widget.ContentLoadingProgressBar
+            android:id="@+id/progressView"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:visibility="invisible"
+            style="@style/Widget.AppCompat.ProgressBar"
+            />
+
+    <!--EmptyView-->
+    <TextView
+            android:id="@+id/errorView"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            tools:text="Oops! We were unable to retrieve your projects"
+            />
+</FrameLayout>

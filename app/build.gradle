@@ -1,0 +1,88 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    targetCompatibility = "8"
+    sourceCompatibility = "8"
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "com.example.myapplication"
+        minSdkVersion versions.minSdk
+        targetSdkVersion versions.targetSdk
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    testOptions {
+        animationsDisabled = true
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+    }
+}
+
+// IMPORTANT!  Enables view caching in viewholders.
+// See: https://github.com/Kotlin/KEEP/blob/master/proposals/android-extensions-entity-caching.md
+androidExtensions {
+    experimental = true
+}
+
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    api deps.kotlin.stdlib7
+
+    api deps.android.ktx
+    api deps.android.appCompat
+    api deps.android.cardView
+    api deps.android.designSupport
+    api 'com.hendraanggrian.material:collapsingtoolbarlayout-subtitle:1.0.0'
+
+    api deps.navigation.ui
+    api deps.navigation.fragment
+
+    api deps.ui.groupie
+    api deps.ui.groupieExtensions
+    api deps.ui.picasso
+
+    api deps.reactive.rxJava
+    api deps.reactive.rxKotlin
+    api deps.reactive.rxAndroid
+
+    api deps.network.retrofit
+    api deps.network.rxAdapter
+    api deps.network.logInterceptor
+    api deps.network.okhttp
+    api deps.network.moshi
+    api deps.network.moshiKotlin
+    api deps.network.moshiConverter
+    testImplementation deps.network.mockk
+    testImplementation deps.network.mockwebserver
+    testImplementation 'android.arch.core:core-testing:1.1.1'
+
+
+    api deps.arch.mosby
+    api deps.arch.dagger
+    kapt deps.arch.daggerCompiler
+
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+
+
+
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
+}
