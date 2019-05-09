@@ -16,11 +16,11 @@ class ProjectItem constructor(val project: Projects.Project) : Item() {
 		// Set image
 		Picasso.get()
 			.load(project.logo)
+			.fit()
 			.into(viewHolder.logo)
 
 		// Set item specific transition names
 		viewHolder.logo.transitionName = project.logo
-		viewHolder.title.transitionName = project.name
 	}
 
 	override fun getLayout() = R.layout.item_project

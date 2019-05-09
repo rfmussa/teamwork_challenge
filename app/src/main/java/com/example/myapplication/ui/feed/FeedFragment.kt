@@ -4,11 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
 import androidx.core.view.doOnPreDraw
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.FragmentNavigator
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.R
@@ -41,17 +44,22 @@ class FeedFragment : MviFragment<FeedView, FeedPresenter>(), FeedView {
 		savedInstanceState: Bundle?
 	): View? {
 		setHasOptionsMenu(true)
+
+		(activity as AppCompatActivity).apply {
+			supportActionBar!!.show()
+		}
+
 		return inflater.inflate(R.layout.fragment_list, container, false)
 	}
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 		setupRecyclerView()
+
 		postponeEnterTransition()
 		view.doOnPreDraw { startPostponedEnterTransition() }
 
 		loadSubject.onNext(Unit)
-
 	}
 
 	override fun loadProjects(): BehaviorSubject<Unit> = loadSubject
@@ -95,7 +103,6 @@ class FeedFragment : MviFragment<FeedView, FeedPresenter>(), FeedView {
 			// Add shared element transitions
 			val extras = FragmentNavigator.Extras.Builder()
 				.addSharedElement(view.logo, ViewCompat.getTransitionName(view.logo)!!)
-				.addSharedElement(view.title, "title")
 				.build()
 
 			// Push action to navigation controller

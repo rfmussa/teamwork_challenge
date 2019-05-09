@@ -7,6 +7,15 @@
         android:orientation="vertical"
         android:fitsSystemWindows="true">
 
+    <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            style="@style/Widget.AppCompat.ActionBar"
+            app:title="Projects"
+            app:titleTextColor="@android:color/white"
+            android:background="@color/colorPrimary"/>
+
     <fragment
             android:id="@+id/my_nav_host_fragment"
             android:name="androidx.navigation.fragment.NavHostFragment"
@@ -14,5 +23,4 @@
             android:layout_height="match_parent"
             app:defaultNavHost="true"
             app:navGraph="@navigation/navigation_graph"/>
-
 </LinearLayout>

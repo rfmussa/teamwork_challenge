@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.navigation.fragment.findNavController
 import androidx.transition.TransitionInflater
@@ -15,7 +16,9 @@ import com.hannesdorfmann.mosby3.mvi.MviFragment
 import com.squareup.picasso.Picasso
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject.create
+import kotlinx.android.synthetic.main.fragment_list.*
 import kotlinx.android.synthetic.main.fragment_project.*
+import kotlinx.android.synthetic.main.fragment_project.toolbar
 import javax.inject.Inject
 
 class DetailFragment : MviFragment<DetailView, DetailPresenter>(), DetailView {
@@ -52,6 +55,10 @@ class DetailFragment : MviFragment<DetailView, DetailPresenter>(), DetailView {
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
+		(activity as AppCompatActivity).apply {
+			supportActionBar!!.hide()
+		}
+
 		ViewCompat.setTransitionName(logo, (arguments!!.getParcelable("project") as Projects.Project).logo)
 	}
 
