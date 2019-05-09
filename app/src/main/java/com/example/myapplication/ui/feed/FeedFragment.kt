@@ -44,11 +44,6 @@ class FeedFragment : MviFragment<FeedView, FeedPresenter>(), FeedView {
 		savedInstanceState: Bundle?
 	): View? {
 		setHasOptionsMenu(true)
-
-		(activity as AppCompatActivity).apply {
-			supportActionBar!!.show()
-		}
-
 		return inflater.inflate(R.layout.fragment_list, container, false)
 	}
 
