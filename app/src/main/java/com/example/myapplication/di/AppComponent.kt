@@ -16,7 +16,7 @@ import dagger.Component
 interface AppComponent {
 	fun build(): AppComponent
 
-	fun fragment(feedFragment: FeedFragment): FeedFragment
+	fun feedFragment(feedFragment: FeedFragment): FeedFragment
 
-	fun detailFragment(detailFragment: DetailFragment): DetailFragment
+	fun detailFragment(feedFragment: DetailFragment): DetailFragment
 }
