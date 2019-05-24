@@ -4,8 +4,10 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
-    targetCompatibility = "8"
-    sourceCompatibility = "8"
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.example.myapplication"
@@ -77,9 +79,11 @@ dependencies {
     api deps.arch.dagger
     kapt deps.arch.daggerCompiler
 
+    implementation 'com.jakewharton:butterknife:10.1.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
+    kapt 'com.jakewharton:butterknife-compiler:10.1.0'
+
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
-
-
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'

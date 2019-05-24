@@ -66,7 +66,7 @@ buildscript {
             network   : [
                     'retrofit'      : "com.squareup.retrofit2:retrofit:${versions.retrofit}",
                     'rxAdapter'     : "com.squareup.retrofit2:adapter-rxjava2:${versions.retrofit}",
-                    'logInterceptor': "com.squareup.retrofit2:retrofit:${versions.retrofit}",
+                    'logInterceptor': "com.squareup.okhttp3:logging-interceptor:${versions.okhttp}",
                     'okhttp'        : "com.squareup.okhttp3:okhttp:${versions.okhttp}",
                     'mockwebserver' : "com.squareup.okhttp3:mockwebserver:${versions.okhttp}",
                     'mockk'         : "io.mockk:mockk:${versions.mockk}",

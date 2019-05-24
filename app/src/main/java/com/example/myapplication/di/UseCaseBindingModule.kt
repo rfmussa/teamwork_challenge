@@ -1,7 +1,7 @@
 package com.example.myapplication.di
 
-import com.example.myapplication.data.ProjectsUseCase
-import com.example.myapplication.data.ProjectsUseCaseImpl
+import com.example.myapplication.usecases.ProjectsUseCase
+import com.example.myapplication.usecases.ProjectsUseCaseImpl
 import dagger.Binds
 import dagger.Module
 
